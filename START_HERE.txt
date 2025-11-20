@@ -1,0 +1,158 @@
+========================================
+  EYE MOUSE CONTROLLER - QUICK START
+========================================
+
+Hi! Welcome to the Eye Mouse Controller.
+
+This tool lets you control your computer mouse using just your eyes!
+
+========================================
+  WHAT YOU NEED
+========================================
+
+1. Windows 10/11 computer
+2. Webcam (built-in or USB)
+3. Python 3.8 or higher installed
+4. Good lighting on your face
+
+========================================
+  INSTALLATION (One-Time Setup)
+========================================
+
+OPTION A - Easy Way (Windows):
+1. Double-click "install_dependencies.bat"
+2. Wait for installation to complete
+3. Done!
+
+OPTION B - Manual Way:
+1. Open Command Prompt
+2. Navigate to this folder:
+   cd C:\path\to\eye_mouse_project
+3. Run: pip install -r requirements.txt
+4. Wait for completion
+
+========================================
+  HOW TO RUN
+========================================
+
+OPTION A - Easy Way (Windows):
+1. Double-click "run_eye_mouse.bat"
+2. Application opens!
+
+OPTION B - Manual Way:
+1. Open Command Prompt
+2. Navigate to this folder
+3. Run: python main.py
+
+========================================
+  FIRST TIME USE
+========================================
+
+1. CALIBRATE (Very Important!)
+   - Click "Calibrate Gaze" button
+   - Look at each target that appears
+   - Blink both eyes when looking at target
+   - Complete all 5 points
+
+2. START TRACKING
+   - Click "Start Tracking" button
+   - Look around to move cursor!
+   - Double blink = Right click
+   - Triple blink = Left click
+
+========================================
+  CONTROLS
+========================================
+
+Mouse Movement: Look where you want cursor to go
+Right Click:    Double blink (both eyes, quick)
+Left Click:     Triple blink (both eyes, quick)
+Pause:          Click "Pause" button
+Exit:           Click "Exit" button or press Q
+
+========================================
+  TIPS FOR BEST RESULTS
+========================================
+
+✓ DO:
+  - Use good lighting on your face
+  - Sit 1-2 feet from webcam
+  - Calibrate before each use
+  - Keep head relatively still
+  - Take breaks every 15-20 minutes
+
+✗ DON'T:
+  - Use in dim lighting
+  - Skip calibration
+  - Move head too much
+  - Sit too close/far from camera
+
+========================================
+  TROUBLESHOOTING
+========================================
+
+Problem: "Python not recognized"
+Solution: Install Python and check "Add to PATH"
+
+Problem: "Camera not found"
+Solution: Close other apps using webcam (Zoom, Skype)
+
+Problem: Dependencies install fails
+Solution: Update pip first:
+          python -m pip install --upgrade pip
+
+Problem: Cursor doesn't move
+Solution: Recalibrate and ensure good lighting
+
+Problem: Blinks don't register
+Solution: Perform clear, full blinks (close eyes completely)
+
+========================================
+  NEED MORE HELP?
+========================================
+
+1. Read "SETUP_GUIDE.md" - Step-by-step instructions
+2. Read "README.md" - Full documentation
+3. Check Troubleshooting section in README
+4. Visit: https://github.com/Sanjai-Kumar-B/Ai-Eye-Tracking
+
+========================================
+  SYSTEM REQUIREMENTS
+========================================
+
+Operating System: Windows 10/11
+Python Version:   3.8 or higher
+RAM:             4GB minimum (8GB recommended)
+Webcam:          720p or higher recommended
+Internet:        Only for initial setup
+
+========================================
+  FILES INCLUDED
+========================================
+
+REQUIRED (Don't delete these):
+- main.py
+- eye_tracker.py
+- mouse_controller.py
+- blink_detector.py
+- calibration.py
+- ui.py
+- requirements.txt
+
+HELPFUL:
+- install_dependencies.bat (Auto installer)
+- run_eye_mouse.bat (Quick launcher)
+- README.md (Full documentation)
+- SETUP_GUIDE.md (Setup instructions)
+- START_HERE.txt (This file)
+
+========================================
+  ENJOY!
+========================================
+
+You're all set! Follow the installation steps above
+and enjoy hands-free mouse control with your eyes.
+
+Made with ❤️ for accessibility
+
+========================================
