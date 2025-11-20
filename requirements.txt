@@ -5,3 +5,5 @@ numpy
 pyttsx3
 screeninfo
 Pillow
+SpeechRecognition
+pyaudio

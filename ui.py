@@ -19,7 +19,8 @@ except ImportError:
 class EyeMouseGUI:
     """Graphical User Interface for Eye Mouse Controller."""
     
-    def __init__(self, start_callback, pause_callback, exit_callback, calibrate_callback):
+    def __init__(self, start_callback, pause_callback, exit_callback, calibrate_callback, 
+                 voice_toggle_callback=None, voice_listen_callback=None):
         """
         Initialize the GUI.
         
@@ -28,11 +29,18 @@ class EyeMouseGUI:
             pause_callback: Function to call when pausing tracking
             exit_callback: Function to call when exiting application
             calibrate_callback: Function to call when calibrating gaze
+            voice_toggle_callback: Function to call when toggling voice assistant
+            voice_listen_callback: Function to call when voice listen button clicked
         """
         self.start_callback = start_callback
         self.pause_callback = pause_callback
         self.exit_callback = exit_callback
         self.calibrate_callback = calibrate_callback
+        self.voice_toggle_callback = voice_toggle_callback
+        self.voice_listen_callback = voice_listen_callback
+        
+        # Voice assistant state
+        self.voice_enabled = False
         
         # Initialize voice engine if available
         self.voice_engine = None
@@ -48,8 +56,8 @@ class EyeMouseGUI:
         
         # Create main window
         self.root = tk.Tk()
-        self.root.title("AI Gaze-Controlled Mouse")
-        self.root.geometry("550x650")
+        self.root.title("AI Eye Mouse + Voice Assistant")
+        self.root.geometry("550x750")
         self.root.resizable(True, True)
         
         # Set window icon (optional)
@@ -91,7 +99,7 @@ class EyeMouseGUI:
         
         title_label = tk.Label(
             header_frame,
-            text="🎯 AI Gaze-Controlled Mouse",
+            text="🎯 AI Eye Mouse + 🎤 Voice",
             font=('Arial', 18, 'bold'),
             fg='white',
             bg='#2C3E50'
@@ -137,10 +145,10 @@ class EyeMouseGUI:
 • Follow on-screen targets and blink
 • Then click "Start Tracking" to begin
 • Look where you want the cursor to go
-• Keep your HEAD STILL, move only EYES
-• DOUBLE BLINK (both eyes) for RIGHT CLICK
-• TRIPLE BLINK (both eyes) for LEFT CLICK
-• Press 'Q' to hide camera window
+• 2 blinks = Right click | 3 blinks = Left click
+• 4 blinks = Drag/Drop | 5 blinks = Middle click
+• Toggle "Voice Assistant" for voice commands
+• Click "🎤 Listen" to speak a command
         """
         
         instructions_label = tk.Label(
@@ -206,6 +214,48 @@ class EyeMouseGUI:
             bg='#ECF0F1'
         )
         self.calibration_status.pack(pady=(10, 0))
+        
+        # Voice Assistant Frame
+        if self.voice_toggle_callback:
+            voice_frame = tk.LabelFrame(
+                content_frame,
+                text="🎤 Voice Assistant (Hands-Free Typing & Commands)",
+                font=('Arial', 11, 'bold'),
+                bg='#ECF0F1',
+                fg='#2C3E50'
+            )
+            voice_frame.pack(fill=tk.X, pady=(15, 0))
+            
+            # Voice controls
+            voice_control_frame = tk.Frame(voice_frame, bg='#ECF0F1')
+            voice_control_frame.pack(fill=tk.X, padx=10, pady=10)
+            
+            # Voice toggle button
+            self.voice_toggle_button = ttk.Button(
+                voice_control_frame,
+                text="Enable Voice Assistant",
+                command=self.on_voice_toggle
+            )
+            self.voice_toggle_button.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
+            
+            # Voice listen button
+            self.voice_listen_button = ttk.Button(
+                voice_control_frame,
+                text="🎤 Listen",
+                command=self.on_voice_listen,
+                state=tk.DISABLED
+            )
+            self.voice_listen_button.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
+            
+            # Voice status label
+            self.voice_status_label = tk.Label(
+                voice_frame,
+                text="Voice: Disabled",
+                font=('Arial', 9),
+                fg='gray',
+                bg='#ECF0F1'
+            )
+            self.voice_status_label.pack(pady=(0, 5))
     
     def on_calibrate(self):
         """Handle Calibrate button click."""
@@ -239,6 +289,41 @@ class EyeMouseGUI:
     def on_closing(self):
         """Handle window close event."""
         self.on_exit()
+    
+    def on_voice_toggle(self):
+        """Handle Voice Assistant toggle button click."""
+        if self.voice_toggle_callback:
+            self.voice_enabled = self.voice_toggle_callback()
+            
+            if self.voice_enabled:
+                self.voice_toggle_button.config(text="Disable Voice Assistant")
+                self.voice_listen_button.config(state=tk.NORMAL)
+                self.voice_status_label.config(text="Voice: Enabled ✓", fg='green')
+                self.speak("Voice assistant enabled")
+            else:
+                self.voice_toggle_button.config(text="Enable Voice Assistant")
+                self.voice_listen_button.config(state=tk.DISABLED)
+                self.voice_status_label.config(text="Voice: Disabled", fg='gray')
+    
+    def on_voice_listen(self):
+        """Handle Voice Listen button click."""
+        if self.voice_listen_callback and self.voice_enabled:
+            self.voice_status_label.config(text="🎤 Listening...", fg='orange')
+            self.root.update_idletasks()
+            self.voice_listen_callback()
+            self.voice_status_label.config(text="Voice: Enabled ✓", fg='green')
+    
+    def update_voice_status(self, status_text, color='green'):
+        """
+        Update voice assistant status.
+        
+        Args:
+            status_text: Status text to display
+            color: Text color
+        """
+        if hasattr(self, 'voice_status_label'):
+            self.voice_status_label.config(text=status_text, fg=color)
+            self.root.update_idletasks()
     
     def update_calibration_status(self, is_calibrated):
         """

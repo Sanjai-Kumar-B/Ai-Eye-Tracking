@@ -17,8 +17,18 @@ class EyeTracker:
     LEFT_IRIS_INDICES = [468, 469, 470, 471, 472]
     RIGHT_IRIS_INDICES = [473, 474, 475, 476, 477]
     
-    def __init__(self):
-        """Initialize MediaPipe FaceMesh with optimized settings."""
+    # Nose tip landmark for head tracking
+    NOSE_TIP = 1
+    
+    def __init__(self, use_head_tracking=True):
+        """
+        Initialize MediaPipe FaceMesh with optimized settings.
+        
+        Args:
+            use_head_tracking: If True, use nose position (head tracking).
+                             If False, use iris position (gaze tracking).
+        """
+        self.use_head_tracking = use_head_tracking
         self.mp_face_mesh = mp.solutions.face_mesh
         self.face_mesh = self.mp_face_mesh.FaceMesh(
             max_num_faces=1,
@@ -104,7 +114,69 @@ class EyeTracker:
     
     def get_eye_position(self, face_landmarks, frame_shape):
         """
-        Calculate the relative gaze position within the eye socket (IMPROVED ACCURACY).
+        Calculate the relative position for cursor control.
+        Can use either head tracking (nose) or gaze tracking (iris).
+        
+        Args:
+            face_landmarks: MediaPipe face landmarks
+            frame_shape: Shape of the frame (height, width, channels)
+        
+        Returns:
+            tuple: (x_ratio, y_ratio) where:
+                   - x_ratio: 0.0 (left) to 1.0 (right)
+                   - y_ratio: 0.0 (up) to 1.0 (down)
+                   Returns None if no face detected
+        """
+        if not face_landmarks:
+            return None
+        
+        # Use head tracking or gaze tracking based on mode
+        if self.use_head_tracking:
+            return self._get_head_position(face_landmarks)
+        else:
+            return self._get_iris_gaze(face_landmarks)
+    
+    def _get_head_position(self, face_landmarks):
+        """
+        Track head position using nose tip.
+        Simple and reliable - move head to control cursor.
+        
+        Args:
+            face_landmarks: MediaPipe face landmarks
+            
+        Returns:
+            tuple: (x_ratio, y_ratio) based on nose position
+        """
+        # Get nose tip position (normalized 0-1)
+        nose_x = face_landmarks.landmark[self.NOSE_TIP].x
+        nose_y = face_landmarks.landmark[self.NOSE_TIP].y
+        
+        # Add to history for smoothing
+        self.gaze_history.append((nose_x, nose_y))
+        if len(self.gaze_history) > self.history_size:
+            self.gaze_history.pop(0)
+        
+        # Calculate average from history
+        if len(self.gaze_history) > 0:
+            nose_x = np.mean([g[0] for g in self.gaze_history])
+            nose_y = np.mean([g[1] for g in self.gaze_history])
+        
+        # Apply exponential smoothing
+        if self.prev_eye_position is not None:
+            nose_x = self.smoothing_factor * self.prev_eye_position[0] + (1 - self.smoothing_factor) * nose_x
+            nose_y = self.smoothing_factor * self.prev_eye_position[1] + (1 - self.smoothing_factor) * nose_y
+        
+        self.prev_eye_position = (nose_x, nose_y)
+        
+        # Clamp to valid range
+        nose_x = np.clip(nose_x, 0.0, 1.0)
+        nose_y = np.clip(nose_y, 0.0, 1.0)
+        
+        return (nose_x, nose_y)
+    
+    def _get_iris_gaze(self, face_landmarks):
+        """
+        Track iris position for precise gaze control (IMPROVED ACCURACY).
         
         Uses enhanced algorithm with better landmark selection and multi-frame averaging.
         
@@ -118,9 +190,6 @@ class EyeTracker:
                    - gaze_y_ratio: 0.0 (looking up) to 1.0 (looking down)
                    Returns None if no face detected
         """
-        if not face_landmarks:
-            return None
-        
         # Calculate gaze ratios for both eyes and average them
         left_gaze = self._calculate_single_eye_gaze(face_landmarks, is_left_eye=True)
         right_gaze = self._calculate_single_eye_gaze(face_landmarks, is_left_eye=False)
@@ -222,22 +291,41 @@ class EyeTracker:
         gaze_x_ratio = np.clip(gaze_x_ratio, 0.0, 1.0)
         gaze_y_ratio = np.clip(gaze_y_ratio, 0.0, 1.0)
         
+        # Final safety check for NaN values
+        if not np.isfinite(gaze_x_ratio):
+            gaze_x_ratio = 0.5
+        if not np.isfinite(gaze_y_ratio):
+            gaze_y_ratio = 0.5
+        
         return (gaze_x_ratio, gaze_y_ratio)
     
     def _apply_nonlinear_scale(self, value):
         """
-        Apply non-linear scaling to improve edge detection.
+        Apply non-linear scaling to enhance edge detection.
         
         This makes it easier to reach screen edges while maintaining
         precision in the center.
         """
+        # Safety check for NaN or invalid values
+        if not np.isfinite(value):
+            return 0.5
+        
+        # Clamp input to valid range
+        value = np.clip(value, 0.0, 1.0)
+        
         # Apply power function for edge enhancement
         if value < 0.5:
             # Left/up side
-            return 0.5 * (2 * value) ** 0.8
+            result = 0.5 * (2 * value) ** 0.8
         else:
             # Right/down side
-            return 0.5 + 0.5 * (2 * (value - 0.5)) ** 0.8
+            result = 0.5 + 0.5 * (2 * (value - 0.5)) ** 0.8
+        
+        # Final safety check
+        if not np.isfinite(result):
+            return 0.5
+            
+        return result
     
     def get_eye_landmarks(self, face_landmarks, frame_shape):
         """

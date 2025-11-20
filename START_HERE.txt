@@ -1,10 +1,14 @@
 ========================================
-  EYE MOUSE CONTROLLER - QUICK START
+  HEAD MOUSE + VOICE CONTROLLER
+  QUICK START GUIDE
 ========================================
 
-Hi! Welcome to the Eye Mouse Controller.
+Hi! Welcome to the Head Mouse + Voice Controller.
 
-This tool lets you control your computer mouse using just your eyes!
+This tool lets you control your computer using:
+ - HEAD MOVEMENTS to move the cursor
+ - EYE BLINKS for mouse clicks
+ - VOICE COMMANDS for typing and apps
 
 ========================================
   WHAT YOU NEED
@@ -12,8 +16,9 @@ This tool lets you control your computer mouse using just your eyes!
 
 1. Windows 10/11 computer
 2. Webcam (built-in or USB)
-3. Python 3.8 or higher installed
-4. Good lighting on your face
+3. Microphone (for voice commands)
+4. Python 3.8 or higher installed
+5. Good lighting on your face
 
 ========================================
   INSTALLATION (One-Time Setup)
@@ -50,27 +55,50 @@ OPTION B - Manual Way:
 
 1. CALIBRATE (Very Important!)
    - Click "Calibrate Gaze" button
-   - Look at each target that appears
-   - Blink both eyes when looking at target
+   - Move your HEAD to position nose at each target
+   - Blink both eyes when nose is at target
    - Complete all 5 points
 
 2. START TRACKING
    - Click "Start Tracking" button
-   - Look around to move cursor!
+   - Move your HEAD to move cursor!
    - 2 blinks = Right click
    - 3 blinks = Left click
    - 4 blinks = Drag/Drop (grab and release)
    - 5 blinks = Middle click
 
+3. USE VOICE ASSISTANT
+   - Click "Enable Voice Assistant"
+   - Click "🎤 Listen" button
+   - Speak your command
+   - Examples: "type hello", "open Chrome"
+
 ========================================
-  CONTROLS (ALL MOUSE FUNCTIONS!)
+  CONTROLS (HEAD + VOICE!)
 ========================================
 
-Mouse Movement: Look where you want cursor to go
+HEAD TRACKING:
+Mouse Movement: Move your head left/right/up/down
 Right Click:    2 blinks (both eyes, quick)
 Left Click:     3 blinks (both eyes, quick)
-Drag & Drop:    4 blinks to grab, move, 4 blinks to drop
+Drag & Drop:    4 blinks to grab, move head, 4 blinks to drop
 Middle Click:   5 blinks (open in new tab, etc.)
+
+VOICE ASSISTANT:
+Enable Voice:   Click "Enable Voice Assistant"
+Listen:         Click "🎤 Listen" button
+Commands:       
+  - "type Hello World" - Type text hands-free
+  - "open Chrome" - Launch Chrome browser
+  - "open Notepad" - Launch Notepad
+  - "open Calculator" - Launch Calculator
+  - "copy" / "paste" - Keyboard shortcuts
+  - "scroll down" / "scroll up" - Scroll pages
+  - "search for Python" - Web search
+  - "enter" / "backspace" / "delete" - Special keys
+  - See FEATURES.md for all commands
+
+Controls:
 Pause:          Click "Pause" button
 Exit:           Click "Exit" button or press Q
 
@@ -82,14 +110,15 @@ Exit:           Click "Exit" button or press Q
   - Use good lighting on your face
   - Sit 1-2 feet from webcam
   - Calibrate before each use
-  - Keep head relatively still
+  - Move head smoothly for cursor control
   - Take breaks every 15-20 minutes
+  - Speak clearly for voice commands
 
 ✗ DON'T:
   - Use in dim lighting
   - Skip calibration
-  - Move head too much
   - Sit too close/far from camera
+  - Move head too quickly
 
 ========================================
   TROUBLESHOOTING
@@ -141,6 +170,7 @@ REQUIRED (Don't delete these):
 - blink_detector.py
 - calibration.py
 - ui.py
+- voice_assistant.py (Voice commands)
 - requirements.txt
 
 HELPFUL:
@@ -151,11 +181,14 @@ HELPFUL:
 - START_HERE.txt (This file)
 
 ========================================
-  ENJOY!
+  ENJOY YOUR COMPLETE HANDS-FREE PC!
 ========================================
 
 You're all set! Follow the installation steps above
-and enjoy hands-free mouse control with your eyes.
+and enjoy complete hands-free control with your eyes
+and voice. No keyboard or mouse needed!
+
+Eye Control + Voice Control = Total Freedom
 
 Made with ❤️ for accessibility
 

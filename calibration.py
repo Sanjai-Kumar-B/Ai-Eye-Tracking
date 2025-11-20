@@ -148,8 +148,8 @@ class GazeCalibrator:
                         gaze_samples.pop(0)
                 
                 # Check for blink to confirm calibration point
-                left_blink, right_blink = self.blink_detector.detect_blink(landmarks, frame.shape)
-                if left_blink or right_blink:
+                blink_actions = self.blink_detector.detect_blink(landmarks, frame.shape)
+                if blink_actions.get('left_click') or blink_actions.get('right_click'):
                     if len(gaze_samples) >= 10:  # Need at least 10 samples
                         blink_detected = True
             

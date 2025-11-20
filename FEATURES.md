@@ -1,14 +1,15 @@
-# 🎮 Complete Feature List - Eye Mouse Controller
+# 🎮 Complete Feature List - Head Mouse + Voice Controller
 
-## ✅ Implemented Features (Version 3.0)
+## ✅ Implemented Features (Version 4.0 - Head Tracking + Voice Edition)
 
 ### Core Mouse Functions
 
 #### 1. **Cursor Movement** ✅
-- **How**: Look at different parts of the screen
-- **Technology**: MediaPipe iris tracking + calibration mapping
-- **Smoothing**: 85% smoothing factor for stability
-- **Accuracy**: Calibrated to your personal eye movement range
+- **How**: Move your head left/right/up/down
+- **Technology**: MediaPipe face tracking + nose position tracking
+- **Smoothing**: Multi-frame averaging for stability
+- **Accuracy**: Calibrated to your personal head movement range
+- **Note**: No need to keep head still - natural movement!
 
 #### 2. **Left Click** ✅
 - **Trigger**: 3 rapid blinks (both eyes)
@@ -54,6 +55,65 @@
   - Click scroll bar arrows
   - Drag scroll bar thumb
 - **Scroll Amount**: Configurable (default: 3 units)
+
+#### 7. **Voice Assistant** ✅ **FULLY WORKING!**
+- **Activation**: Toggle button in GUI
+- **Trigger**: Click "🎤 Listen" button
+- **Recognition**: Google Speech Recognition API
+- **Use Cases**:
+  - Type text hands-free
+  - Open applications by voice
+  - Execute keyboard shortcuts
+  - Web searches
+  - Window controls
+  - Scroll pages
+- **Commands**: 20+ voice commands (see below)
+- **Reliability**: Works without speech feedback to avoid threading issues
+
+---
+
+## 🎤 Voice Commands Reference
+
+### Text Input
+- **"type [text]"** - Types the specified text
+  - Example: "type Hello World"
+- **"start typing mode"** - Continuous voice-to-text
+- **"stop typing mode"** - Exit typing mode
+
+### Application Control
+- **"open [app]"** - Launches applications
+  - Supported: Chrome, Firefox, Edge, Notepad, Calculator, File Explorer, Paint, Word, Excel, PowerPoint, Outlook, VS Code, Spotify, VLC
+  - Automatically finds correct path on your system
+  - Examples: 
+    - "open Chrome" → Launches Google Chrome
+    - "open Notepad" → Launches Notepad
+    - "open Calculator" → Launches Calculator
+- **"close window"** - Closes active window (Alt+F4)
+- **"minimize"** - Minimizes active window
+- **"maximize"** - Maximizes active window
+
+### Keyboard Shortcuts
+- **"copy"** - Ctrl+C
+- **"paste"** - Ctrl+V
+- **"undo"** - Ctrl+Z
+- **"select all"** - Ctrl+A
+- **"enter"** - Press Enter key
+- **"backspace"** - Delete last character
+- **"delete"** - Press Delete key
+- **"tab"** - Press Tab key
+
+### Scrolling
+- **"scroll up"** - Scroll page up
+- **"scroll down"** - Scroll page down
+
+### Web Search
+- **"search for [query]"** - Opens Google search
+  - Example: "search for Python tutorials"
+
+### System Controls
+- **"volume up"** - Increase volume
+- **"volume down"** - Decrease volume
+- **"mute"** - Toggle mute
 
 ---
 
@@ -239,22 +299,24 @@
 5. **Voice typing**: For text input (combine with eye mouse)
 
 ### Accessibility Combinations
-- **Eye Mouse** + **Voice Control** = Complete hands-free
+- **Eye Mouse** + **Voice Assistant** = Complete hands-free operation ✅
 - **Eye Mouse** + **On-screen Keyboard** = Full text input
 - **Eye Mouse** + **Screen Reader** = Enhanced feedback
+- **Voice Assistant** alone = Hands-free typing and app control ✅
 
 ---
 
 ## 🚀 Roadmap
 
-### Version 3.0 (Current)
+### Version 3.5 (Current)
 - ✅ Basic cursor movement
-- ✅ Left/Right clicks
+- ✅ Left/Right/Middle clicks
 - ✅ Drag and drop
-- ✅ Middle click
 - ✅ 5-point calibration
+- ✅ Voice assistant with 20+ commands
+- ✅ Complete hands-free operation
 
-### Version 3.1 (Next)
+### Version 3.6 (Next)
 - 🔄 Edge-dwell scrolling
 - 🔄 Improved blink detection
 - 🔄 Double-click support
@@ -278,5 +340,6 @@ Missing a feature? Let us know:
 
 ---
 
-*Last Updated: November 2025*
-*Version: 3.0*
+*Last Updated: November 20, 2025*
+*Version: 4.0 - Head Tracking + Voice Assistant Edition*
+*Status: Fully Working and Production Ready*

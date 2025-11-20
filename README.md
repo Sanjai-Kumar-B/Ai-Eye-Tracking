@@ -1,8 +1,8 @@
-# 👁️ AI Eye-Controlled Mouse - Accessibility Tool
+# 👁️ AI Head-Controlled Mouse + Voice Assistant
 
 <div align="center">
 
-**An AI-powered desktop application that enables hands-free computer control using eye gaze tracking and blink detection for users with physical disabilities.**
+**An AI-powered desktop application that enables hands-free computer control using head tracking, blink detection, and voice commands for users with physical disabilities.**
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
@@ -15,16 +15,23 @@
 
 ## 🎯 Overview
 
-This project provides a complete **hands-free mouse control solution** using eye gaze tracking and blink detection. Built specifically for users with physical disabilities who cannot use traditional input devices.
+This project provides a complete **hands-free computer control solution** using head tracking, blink detection, and voice commands. Built specifically for users with physical disabilities who cannot use traditional input devices.
 
 ### ✨ Key Features
 
-- **👁️ Eye Gaze Tracking**: Control cursor by looking at different parts of the screen
+- **👁️ Head Tracking**: Control cursor by moving your head (no need to keep head still!)
 - **👀 Blink Detection**: Perform mouse actions using eye blink patterns
   - **2 Blinks** → Right Click
   - **3 Blinks** → Left Click  
   - **4 Blinks** → Drag Toggle (start/stop dragging)
   - **5 Blinks** → Middle Click
+- **🎤 Voice Assistant**: Hands-free typing and app control
+  - Type text without keyboard
+  - Open applications (Chrome, Notepad, Calculator, etc.)
+  - Execute shortcuts (copy, paste, undo, etc.)
+  - Web searches
+  - Scroll control
+  - 20+ voice commands
 - **🖱️ Full Mouse Functionality**: 
   - Cursor movement
   - Left/Right/Middle clicks
@@ -62,8 +69,9 @@ This project provides a complete **hands-free mouse control solution** using eye
 
 ### Recommended Setup
 - Good lighting on your face
-- Stable seating position (headrest recommended)
+- Stable seating position (optional headrest for stability)
 - 1-2 feet distance from webcam
+- **For head tracking**: Move your head freely
 - No strong reflections on glasses (if worn)
 
 ---
@@ -140,7 +148,9 @@ opencv-python      # Computer vision and webcam
 mediapipe         # Face and eye landmark detection
 pyautogui         # Mouse control
 numpy             # Mathematical operations
-pyttsx3           # Text-to-speech (optional)
+pyttsx3           # Text-to-speech for voice feedback
+SpeechRecognition # Voice command recognition
+pyaudio           # Audio input for voice commands
 screeninfo        # Multi-monitor support
 Pillow            # Image processing
 ```
@@ -159,7 +169,7 @@ python main.py
 
 A window will open with the control interface.
 
-### Step 2: Calibrate Your Gaze (REQUIRED - First Time)
+### Step 2: Calibrate Your Head Tracking (REQUIRED - First Time)
 
 1. Click **"🎯 Calibrate Gaze"** button
 2. A webcam window opens showing your face
@@ -170,16 +180,16 @@ A window will open with the control interface.
    - **Bottom-Left corner**
    - **Center**
 4. For each target:
-   - **Look directly at the target**
+   - **Move your head to position nose at the target**
    - **Blink BOTH eyes** to confirm
    - Target turns green ✓
 5. After all 5 points: **Calibration Complete!**
 
-### Step 3: Start Eye Tracking
+### Step 3: Start Head Tracking
 
 1. Click **"▶ Start Tracking"**
 2. Webcam window opens with facial landmarks
-3. **Look around** to move the cursor
+3. **Move your head** to move the cursor
 4. **Blink to perform actions**:
    - **2 Blinks** (quick) = **RIGHT CLICK**
    - **3 Blinks** (quick) = **LEFT CLICK**
@@ -187,6 +197,19 @@ A window will open with the control interface.
    - **5 Blinks** (quick) = **MIDDLE CLICK**
 
 ### Step 4: Using Advanced Features
+
+**Voice Assistant:**
+1. Click **"Enable Voice Assistant"** button
+2. Click **"🎤 Listen"** when you want to speak
+3. Speak a command (e.g., "type Hello")
+4. See command executed automatically
+5. Available commands:
+   - "type [text]" - Type without keyboard
+   - "open Chrome" - Launch applications
+   - "copy" / "paste" - Keyboard shortcuts
+   - "scroll up" / "scroll down"
+   - "search for [query]" - Web search
+   - See [FEATURES.md](FEATURES.md) for complete list
 
 **Drag and Drop:**
 1. Position cursor over item

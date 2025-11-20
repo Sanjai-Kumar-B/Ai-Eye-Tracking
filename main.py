@@ -15,16 +15,28 @@ from mouse_controller import MouseController
 from blink_detector import BlinkDetector
 from calibration import GazeCalibrator
 from ui import EyeMouseGUI
+from voice_assistant import VoiceAssistant
 
 class EyeMouseApp:
     """Main application controller that integrates all modules."""
     
     def __init__(self):
         """Initialize all components of the application."""
-        self.eye_tracker = EyeTracker()
+        # Initialize with HEAD TRACKING (more reliable, no NaN issues)
+        self.eye_tracker = EyeTracker(use_head_tracking=True)
         self.mouse_controller = MouseController()
         self.blink_detector = BlinkDetector()
         self.calibrator = GazeCalibrator(self.blink_detector)
+        
+        # Initialize voice assistant
+        try:
+            self.voice_assistant = VoiceAssistant()
+            voice_available = True
+            print("Voice Assistant: Initialized successfully")
+        except Exception as e:
+            self.voice_assistant = None
+            voice_available = False
+            print(f"Voice Assistant: Not available ({e})")
         
         self.is_tracking = False
         self.cap = None
@@ -35,7 +47,9 @@ class EyeMouseApp:
             start_callback=self.start_tracking,
             pause_callback=self.pause_tracking,
             exit_callback=self.exit_app,
-            calibrate_callback=self.calibrate_gaze
+            calibrate_callback=self.calibrate_gaze,
+            voice_toggle_callback=self.toggle_voice_assistant if voice_available else None,
+            voice_listen_callback=self.listen_voice_command if voice_available else None
         )
     
     
@@ -215,17 +229,46 @@ class EyeMouseApp:
                 self.cap.release()
             cv2.destroyAllWindows()
     
+    def toggle_voice_assistant(self):
+        """
+        Toggle voice assistant on/off.
+        
+        Returns:
+            bool: True if enabled, False if disabled
+        """
+        if self.voice_assistant:
+            return self.voice_assistant.toggle()
+        return False
+    
+    def listen_voice_command(self):
+        """Listen for and process a voice command."""
+        if not self.voice_assistant or not self.voice_assistant.is_enabled:
+            return
+        
+        # Listen for command
+        command_text = self.voice_assistant.listen()
+        
+        if command_text:
+            # Process the command
+            action = self.voice_assistant.process_command(command_text)
+            
+            # Update GUI status
+            if action:
+                self.gui.update_voice_status(f"Command: {command_text[:30]}", 'blue')
+            else:
+                self.gui.update_voice_status("Command not recognized", 'red')
+    
     def run(self):
         """Start the GUI main loop."""
         self.gui.run()
 
 
 if __name__ == "__main__":
-    print("Starting AI Gaze-Controlled Mouse Application...")
+    print("Starting AI Head-Controlled Mouse Application...")
     print("=" * 50)
-    print("IMPORTANT: This is a GAZE TRACKER (not head tracker)")
+    print("IMPORTANT: This is a HEAD TRACKER (not gaze tracker)")
     print("You must CALIBRATE before first use!")
-    print("Keep your HEAD STILL, move only your EYES")
+    print("Move your HEAD to control the cursor")
     print("Make sure your webcam is connected and functioning.")
     print("=" * 50)
     
