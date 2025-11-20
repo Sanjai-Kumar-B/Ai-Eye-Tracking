@@ -149,24 +149,55 @@ class EyeMouseApp:
                                     (10, frame.shape[0] - 40), 
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 0), 2)
                     
-                    # Detect blink patterns and perform clicks
+                    # Detect blink patterns and perform actions
                     blink_result = self.blink_detector.detect_blink(landmarks, frame.shape)
                     
-                    if blink_result == 'left':
+                    # Handle different actions based on blink patterns
+                    if blink_result['left_click']:
                         self.mouse_controller.left_click()
-                        cv2.putText(frame, "TRIPLE BLINK - LEFT CLICK", (30, 50), 
+                        cv2.putText(frame, "3 BLINKS - LEFT CLICK", (30, 50), 
                                     cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
                     
-                    elif blink_result == 'right':
+                    elif blink_result['right_click']:
                         self.mouse_controller.right_click()
-                        cv2.putText(frame, "DOUBLE BLINK - RIGHT CLICK", (30, 50), 
+                        cv2.putText(frame, "2 BLINKS - RIGHT CLICK", (30, 50), 
                                     cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
                     
-                    # Show blink count feedback
+                    elif blink_result['drag_toggle']:
+                        if self.mouse_controller.is_drag_active():
+                            self.mouse_controller.end_drag()
+                            cv2.putText(frame, "4 BLINKS - DROP", (30, 50), 
+                                        cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 165, 0), 2)
+                        else:
+                            self.mouse_controller.start_drag()
+                            cv2.putText(frame, "4 BLINKS - START DRAG", (30, 50), 
+                                        cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 165, 0), 2)
+                    
+                    elif blink_result['middle_click']:
+                        self.mouse_controller.middle_click()
+                        cv2.putText(frame, "5 BLINKS - MIDDLE CLICK", (30, 50), 
+                                    cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+                    
+                    elif blink_result['scroll_up']:
+                        self.mouse_controller.scroll_up()
+                        cv2.putText(frame, "SCROLL UP", (30, 50), 
+                                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+                    
+                    elif blink_result['scroll_down']:
+                        self.mouse_controller.scroll_down()
+                        cv2.putText(frame, "SCROLL DOWN", (30, 50), 
+                                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+                    
+                    # Show blink count and drag status
                     blink_count = len(self.blink_detector.blink_sequence)
                     if blink_count > 0:
                         cv2.putText(frame, f"Blinks: {blink_count}", (30, 100), 
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
+                    
+                    # Show drag status
+                    if self.mouse_controller.is_drag_active():
+                        cv2.putText(frame, "DRAGGING...", (30, 140), 
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 165, 0), 2)
                 
                 # Display frame
                 cv2.imshow('Gaze Tracker - Press Q to hide window', frame)

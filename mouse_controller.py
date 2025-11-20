@@ -43,8 +43,15 @@ class MouseController:
         self.max_y_ratio = 1.0
         
         # Click debouncing
-        self.last_click_time = {'left': 0, 'right': 0}
+        self.last_click_time = {'left': 0, 'right': 0, 'middle': 0}
         self.click_cooldown = 0.5  # Minimum time between clicks (seconds)
+        
+        # Drag and drop state
+        self.is_dragging = False
+        self.drag_start_pos = None
+        
+        # Scroll settings
+        self.scroll_amount = 3  # Scroll units per action
     
     def load_calibration(self, calibration_data):
         """
@@ -151,6 +158,88 @@ class MouseController:
             print("Double click performed")
         except Exception as e:
             print(f"Error performing double click: {e}")
+    
+    def middle_click(self):
+        """Perform a middle mouse click with debouncing."""
+        import time
+        current_time = time.time()
+        
+        if current_time - self.last_click_time['middle'] > self.click_cooldown:
+            try:
+                pyautogui.middleClick()
+                self.last_click_time['middle'] = current_time
+                print("Middle click performed")
+            except Exception as e:
+                print(f"Error performing middle click: {e}")
+    
+    def scroll_up(self, amount=None):
+        """
+        Scroll up (positive scroll).
+        
+        Args:
+            amount: Number of scroll units (default: self.scroll_amount)
+        """
+        scroll_units = amount if amount else self.scroll_amount
+        try:
+            pyautogui.scroll(scroll_units)
+            print(f"Scrolled up {scroll_units} units")
+        except Exception as e:
+            print(f"Error scrolling up: {e}")
+    
+    def scroll_down(self, amount=None):
+        """
+        Scroll down (negative scroll).
+        
+        Args:
+            amount: Number of scroll units (default: self.scroll_amount)
+        """
+        scroll_units = amount if amount else self.scroll_amount
+        try:
+            pyautogui.scroll(-scroll_units)
+            print(f"Scrolled down {scroll_units} units")
+        except Exception as e:
+            print(f"Error scrolling down: {e}")
+    
+    def start_drag(self):
+        """
+        Start drag operation (press and hold left mouse button).
+        """
+        if not self.is_dragging:
+            try:
+                current_pos = pyautogui.position()
+                self.drag_start_pos = current_pos
+                pyautogui.mouseDown()
+                self.is_dragging = True
+                print(f"Drag started at {current_pos}")
+            except Exception as e:
+                print(f"Error starting drag: {e}")
+        else:
+            print("Already dragging")
+    
+    def end_drag(self):
+        """
+        End drag operation (release left mouse button).
+        """
+        if self.is_dragging:
+            try:
+                current_pos = pyautogui.position()
+                pyautogui.mouseUp()
+                print(f"Drag ended at {current_pos} (started at {self.drag_start_pos})")
+                self.is_dragging = False
+                self.drag_start_pos = None
+            except Exception as e:
+                print(f"Error ending drag: {e}")
+        else:
+            print("Not currently dragging")
+    
+    def is_drag_active(self):
+        """
+        Check if drag operation is currently active.
+        
+        Returns:
+            bool: True if dragging, False otherwise
+        """
+        return self.is_dragging
     
     def set_smoothing(self, smoothing_factor):
         """

@@ -25,16 +25,16 @@ class BlinkDetector:
         # State tracking for BOTH EYES blink detection
         self.both_eyes_blink_counter = 0
         
-        # Blink sequence tracking for double/triple blinks
+        # Blink sequence tracking for double/triple/quadruple blinks
         self.blink_sequence = []
         self.last_blink_time = 0
-        self.blink_sequence_timeout = 0.8  # Time window for detecting multiple blinks
+        self.blink_sequence_timeout = 1.5  # Time window for detecting multiple blinks (increased for 4-5 blinks)
         self.between_blink_min = 0.1  # Minimum time between blinks in a sequence
-        self.between_blink_max = 0.6  # Maximum time between blinks in a sequence
+        self.between_blink_max = 0.7  # Maximum time between blinks in a sequence
         
         # Debouncing
         self.last_action_time = 0
-        self.action_cooldown = 1.0  # Cooldown after any click action
+        self.action_cooldown = 1.0  # Cooldown after any action (click/scroll/drag)
         
         # State for detecting blink completion
         self.in_blink = False
@@ -74,21 +74,30 @@ class BlinkDetector:
     
     def detect_blink(self, face_landmarks, frame_shape):
         """
-        Detect blinks from face landmarks.
+        Detect blinks from face landmarks and return actions.
         
-        NEW BEHAVIOR:
-        - Double blink (both eyes, 2 times) = RIGHT CLICK
-        - Triple blink (both eyes, 3 times) = LEFT CLICK
+        BLINK PATTERNS:
+        - 2 blinks = RIGHT CLICK
+        - 3 blinks = LEFT CLICK
+        - 4 blinks = DRAG TOGGLE (start/stop drag)
+        - 5 blinks = MIDDLE CLICK
         
         Args:
             face_landmarks: MediaPipe face landmarks
             frame_shape: Shape of the frame (height, width, channels)
         
         Returns:
-            tuple: (left_click, right_click) boolean values
+            dict: {'left_click': bool, 'right_click': bool, 'scroll_up': bool, 
+                   'scroll_down': bool, 'drag_toggle': bool, 'middle_click': bool}
         """
+        default_result = {
+            'left_click': False, 'right_click': False,
+            'scroll_up': False, 'scroll_down': False,
+            'drag_toggle': False, 'middle_click': False
+        }
+        
         if not face_landmarks:
-            return False, False
+            return default_result
         
         h, w = frame_shape[:2]
         
@@ -133,10 +142,10 @@ class BlinkDetector:
                 self.in_blink = False
                 self.both_eyes_blink_counter = 0
         
-        # Check for double or triple blink patterns
-        left_click, right_click = self._check_blink_sequence(current_time)
+        # Check for blink patterns (2, 3, 4, or 5 blinks)
+        result = self._check_blink_sequence(current_time)
         
-        return left_click, right_click
+        return result
     
     def _add_blink_to_sequence(self, current_time):
         """Add a completed blink to the sequence."""
@@ -155,7 +164,8 @@ class BlinkDetector:
         Check if the blink sequence matches a pattern.
         
         Returns:
-            tuple: (left_click, right_click)
+            dict: {'left_click': bool, 'right_click': bool, 'scroll_up': bool, 
+                   'scroll_down': bool, 'drag_toggle': bool, 'middle_click': bool}
         """
         # Clean old blinks
         self.blink_sequence = [t for t in self.blink_sequence 
@@ -163,34 +173,63 @@ class BlinkDetector:
         
         # Check cooldown
         if current_time - self.last_action_time < self.action_cooldown:
-            return False, False
+            return {
+                'left_click': False, 'right_click': False, 
+                'scroll_up': False, 'scroll_down': False,
+                'drag_toggle': False, 'middle_click': False
+            }
         
-        left_click = False
-        right_click = False
+        result = {
+            'left_click': False, 'right_click': False,
+            'scroll_up': False, 'scroll_down': False,
+            'drag_toggle': False, 'middle_click': False
+        }
+        
+        # Check for 5 blinks (MIDDLE CLICK)
+        if len(self.blink_sequence) >= 5:
+            time_span = self.blink_sequence[-1] - self.blink_sequence[-5]
+            if time_span <= self.blink_sequence_timeout:
+                result['middle_click'] = True
+                self.blink_sequence = []
+                self.last_action_time = current_time
+                print("✓ 5 BLINKS DETECTED -> MIDDLE CLICK")
+                return result
+        
+        # Check for 4 blinks (DRAG TOGGLE - start/stop drag)
+        if len(self.blink_sequence) >= 4:
+            time_span = self.blink_sequence[-1] - self.blink_sequence[-4]
+            if time_span <= self.blink_sequence_timeout:
+                result['drag_toggle'] = True
+                self.blink_sequence = []
+                self.last_action_time = current_time
+                print("✓ 4 BLINKS DETECTED -> DRAG TOGGLE")
+                return result
         
         # Check for triple blink (LEFT CLICK)
         if len(self.blink_sequence) >= 3:
-            # Verify all blinks are within valid timing
             time_span = self.blink_sequence[-1] - self.blink_sequence[-3]
             if time_span <= self.blink_sequence_timeout:
-                left_click = True
-                self.blink_sequence = []
-                self.last_action_time = current_time
-                print("✓ TRIPLE BLINK DETECTED -> LEFT CLICK")
+                # Wait to see if it's actually 4 or 5 blinks
+                if current_time - self.blink_sequence[-1] > 0.5:
+                    result['left_click'] = True
+                    self.blink_sequence = []
+                    self.last_action_time = current_time
+                    print("✓ 3 BLINKS DETECTED -> LEFT CLICK")
+                    return result
         
         # Check for double blink (RIGHT CLICK)
         elif len(self.blink_sequence) >= 2:
-            # Verify blinks are within valid timing
             time_between = self.blink_sequence[-1] - self.blink_sequence[-2]
             if self.between_blink_min <= time_between <= self.between_blink_max:
-                # Wait a bit to see if it's actually a triple blink
-                if current_time - self.blink_sequence[-1] > 0.4:
-                    right_click = True
+                # Wait to see if it's actually a triple blink
+                if current_time - self.blink_sequence[-1] > 0.5:
+                    result['right_click'] = True
                     self.blink_sequence = []
                     self.last_action_time = current_time
-                    print("✓ DOUBLE BLINK DETECTED -> RIGHT CLICK")
+                    print("✓ 2 BLINKS DETECTED -> RIGHT CLICK")
+                    return result
         
-        return left_click, right_click
+        return result
     
     def detect_double_blink(self, face_landmarks, frame_shape):
         """

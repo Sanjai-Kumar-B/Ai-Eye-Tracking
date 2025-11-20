@@ -20,9 +20,16 @@ This project provides a complete **hands-free mouse control solution** using eye
 ### ✨ Key Features
 
 - **👁️ Eye Gaze Tracking**: Control cursor by looking at different parts of the screen
-- **👀 Blink Detection**: Perform clicks using eye blinks
-  - **Double Blink** (both eyes) → Right Click
-  - **Triple Blink** (both eyes) → Left Click
+- **👀 Blink Detection**: Perform mouse actions using eye blink patterns
+  - **2 Blinks** → Right Click
+  - **3 Blinks** → Left Click  
+  - **4 Blinks** → Drag Toggle (start/stop dragging)
+  - **5 Blinks** → Middle Click
+- **🖱️ Full Mouse Functionality**: 
+  - Cursor movement
+  - Left/Right/Middle clicks
+  - Drag and drop
+  - Scrolling (up/down)
 - **🎯 5-Point Calibration**: Personalized calibration for accurate tracking
 - **🖱️ Smooth Cursor Control**: Advanced smoothing and deadzone to prevent jitter
 - **🎨 User-Friendly GUI**: Simple interface with calibration and control buttons
@@ -173,20 +180,107 @@ A window will open with the control interface.
 1. Click **"▶ Start Tracking"**
 2. Webcam window opens with facial landmarks
 3. **Look around** to move the cursor
-4. **Blink to click**:
-   - **Double blink** (both eyes, quick) = **RIGHT CLICK**
-   - **Triple blink** (both eyes, quick) = **LEFT CLICK**
+4. **Blink to perform actions**:
+   - **2 Blinks** (quick) = **RIGHT CLICK**
+   - **3 Blinks** (quick) = **LEFT CLICK**
+   - **4 Blinks** (quick) = **DRAG/DROP** (toggle drag mode)
+   - **5 Blinks** (quick) = **MIDDLE CLICK**
+
+### Step 4: Using Advanced Features
+
+**Drag and Drop:**
+1. Position cursor over item
+2. Blink **4 times** to start dragging
+3. Move your eyes to drag the item
+4. Blink **4 times** again to drop
+
+**Scrolling:**
+- Currently done by clicking scroll bars
+- Future: Edge-dwell scrolling (dwell cursor at screen edges)
 
 ### Step 4: Control Tips
 
 ✅ **Best Practices:**
 - Keep head relatively still (some movement is OK)
 - Look at different screen areas to move cursor
-- Perform deliberate, clear blinks for clicks
+- Perform deliberate, clear blinks for actions
 - Take breaks every 15-20 minutes
+- Practice blink patterns before using productively
 
 ⏸️ **Pause Tracking**: Click "⏸ Pause" button  
 ❌ **Exit**: Click "❌ Exit" button or press 'Q' in webcam window
+
+---
+
+## 🎮 Complete Control Guide
+
+### Mouse Actions Available
+
+| Action | Blink Pattern | Description |
+|--------|---------------|-------------|
+| **Move Cursor** | Look around | Eye gaze controls cursor position |
+| **Right Click** | 2 blinks | Context menus, selection options |
+| **Left Click** | 3 blinks | Select, open, activate |
+| **Drag/Drop** | 4 blinks | Start dragging; 4 more to drop |
+| **Middle Click** | 5 blinks | Open links in new tab, etc. |
+
+### How to Perform Each Action
+
+**Moving the Cursor:**
+- Simply look where you want the cursor to go
+- The cursor will smoothly follow your gaze
+
+**Right Click (2 Blinks):**
+1. Position cursor on target
+2. Blink both eyes twice quickly: blink-open-blink-open
+3. Right-click menu appears
+
+**Left Click (3 Blinks):**
+1. Position cursor on target
+2. Blink both eyes three times: blink-open-blink-open-blink-open
+3. Item is selected/opened
+
+**Drag and Drop (4 Blinks):**
+1. Position cursor on item to drag
+2. Blink 4 times to "grab" the item
+3. Look where you want to move it (cursor drags item)
+4. Blink 4 times again to "release/drop"
+5. Item is moved to new location
+
+**Middle Click (5 Blinks):**
+1. Position cursor on link or item
+2. Blink 5 times quickly
+3. Action performed (e.g., open in new tab)
+
+### Practical Use Cases
+
+**Opening an Application:**
+1. Look at the app icon on desktop/taskbar
+2. Blink 3 times (left click)
+3. Application opens
+
+**Closing a Window:**
+1. Look at the X button
+2. Blink 3 times (left click)
+3. Window closes
+
+**Selecting Text:**
+1. Position cursor at text start
+2. Blink 4 times (start drag)
+3. Look to text end (drags selection)
+4. Blink 4 times (end drag)
+5. Text is selected
+
+**Right-Click Context Menu:**
+1. Look at file/folder
+2. Blink 2 times (right click)
+3. Context menu appears
+4. Look at menu option
+5. Blink 3 times (left click) to select
+
+**Scrolling a Page:**
+- Method 1: Look at scroll bar, click and drag
+- Method 2: Look at scroll arrows, click repeatedly
 
 ---
 
