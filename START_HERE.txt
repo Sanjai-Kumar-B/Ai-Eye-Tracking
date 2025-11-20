@@ -57,16 +57,20 @@ OPTION B - Manual Way:
 2. START TRACKING
    - Click "Start Tracking" button
    - Look around to move cursor!
-   - Double blink = Right click
-   - Triple blink = Left click
+   - 2 blinks = Right click
+   - 3 blinks = Left click
+   - 4 blinks = Drag/Drop (grab and release)
+   - 5 blinks = Middle click
 
 ========================================
-  CONTROLS
+  CONTROLS (ALL MOUSE FUNCTIONS!)
 ========================================
 
 Mouse Movement: Look where you want cursor to go
-Right Click:    Double blink (both eyes, quick)
-Left Click:     Triple blink (both eyes, quick)
+Right Click:    2 blinks (both eyes, quick)
+Left Click:     3 blinks (both eyes, quick)
+Drag & Drop:    4 blinks to grab, move, 4 blinks to drop
+Middle Click:   5 blinks (open in new tab, etc.)
 Pause:          Click "Pause" button
 Exit:           Click "Exit" button or press Q
 

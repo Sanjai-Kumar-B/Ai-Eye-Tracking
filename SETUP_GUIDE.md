@@ -81,8 +81,10 @@ Follow these simple steps to get the Eye Mouse running on your computer:
 
 4. **Control your mouse with your eyes!**
    - Look around to move cursor
-   - Double blink = Right click
-   - Triple blink = Left click
+   - 2 blinks = Right click
+   - 3 blinks = Left click
+   - 4 blinks = Drag/Drop (grab item, move, release)
+   - 5 blinks = Middle click (open in new tab)
 
 ---
 
@@ -178,8 +180,10 @@ eye_mouse_project/
 
 ### Controls:
 - **Look**: Move cursor
-- **Double Blink**: Right click
-- **Triple Blink**: Left click
+- **2 Blinks**: Right click
+- **3 Blinks**: Left click
+- **4 Blinks**: Drag/Drop (grab and release)
+- **5 Blinks**: Middle click
 - **"Pause" Button**: Stop tracking
 - **"Q" Key**: Close webcam window
 

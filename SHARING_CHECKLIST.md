@@ -6,13 +6,15 @@
 
 - [x] `main.py` - Main application controller
 - [x] `eye_tracker.py` - Eye tracking module  
-- [x] `mouse_controller.py` - Cursor control
-- [x] `blink_detector.py` - Blink detection
+- [x] `mouse_controller.py` - Cursor control with drag/scroll
+- [x] `blink_detector.py` - Blink detection (2-5 blink patterns)
 - [x] `calibration.py` - Calibration system
 - [x] `ui.py` - User interface
+- [x] `gesture_detector.py` - Gesture detection (NEW!)
 - [x] `requirements.txt` - Dependencies list
 - [x] `README.md` - Full documentation
 - [x] `SETUP_GUIDE.md` - Quick setup instructions
+- [x] `START_HERE.txt` - Beginner-friendly guide
 - [x] `LICENSE` - MIT License
 
 ### Helpful Files (Recommended):
@@ -20,6 +22,8 @@
 - [x] `install_dependencies.bat` - Auto-install dependencies (Windows)
 - [x] `run_eye_mouse.bat` - Quick launch (Windows)
 - [x] `SHARING_CHECKLIST.md` - This file
+- [x] `FEATURES.md` - Complete feature documentation (NEW!)
+- [x] `UPDATE_SUMMARY.md` - Version 3.0 changes (NEW!)
 
 ### Optional Documentation:
 
@@ -58,7 +62,14 @@ https://github.com/Sanjai-Kumar-B/Ai-Eye-Tracking
 Send them this message:
 
 ```
-Hi! I'm sharing the Eye Mouse Controller with you.
+Hi! I'm sharing the Eye Mouse Controller with you - Version 3.0!
+
+🆕 NOW INCLUDES ALL MOUSE FEATURES:
+✅ Cursor movement (look around)
+✅ Right click (2 blinks)
+✅ Left click (3 blinks)
+✅ Drag & Drop (4 blinks to grab, move, 4 blinks to drop)
+✅ Middle click (5 blinks - open in new tab!)
 
 SETUP STEPS:
 1. Download/extract all files to a folder
@@ -71,9 +82,18 @@ SETUP STEPS:
 5. Click "Calibrate Gaze" and follow instructions
 6. Click "Start Tracking" to use!
 
+COMPLETE CONTROLS:
+- Look = Move cursor
+- 2 blinks = Right click
+- 3 blinks = Left click
+- 4 blinks = Drag/Drop
+- 5 blinks = Middle click
+
 DOCUMENTATION:
-- SETUP_GUIDE.md - Quick start guide
-- README.md - Full documentation
+- START_HERE.txt - Quick start (read this first!)
+- SETUP_GUIDE.md - Detailed setup instructions
+- README.md - Full documentation with examples
+- FEATURES.md - Complete feature list
 
 SUPPORT:
 - Check README.md Troubleshooting section
