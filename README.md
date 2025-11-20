@@ -1,464 +1,453 @@
-# 👁️ AI Gaze-Controlled Mouse for Disabled Users
+# 👁️ AI Eye-Controlled Mouse - Accessibility Tool
 
 <div align="center">
 
-**An AI-powered desktop application that enables users with physical disabilities to control their computer mouse using precise EYE GAZE and blinks - NO HEAD MOVEMENT REQUIRED.**
+**An AI-powered desktop application that enables hands-free computer control using eye gaze tracking and blink detection for users with physical disabilities.**
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.12-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
-![Version](https://img.shields.io/badge/Version-2.0%20Gaze%20Tracking-brightgreen.svg)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10.21-orange.svg)
 
 </div>
 
 ---
 
-## ⚡ Version 2.0 - GAZE TRACKING MODE
+## 🎯 Overview
 
-**🎯 Major Upgrade**: This is now a **true gaze tracker**, not just a head tracker!
+This project provides a complete **hands-free mouse control solution** using eye gaze tracking and blink detection. Built specifically for users with physical disabilities who cannot use traditional input devices.
 
-### What Changed:
-- **OLD**: Move your head to control cursor (head tracking)
-- **NEW**: Keep head still, move only your EYES (gaze tracking)
-- **Requires**: Initial calibration for high accuracy
-- **Perfect for**: Users with NO head movement capability
+### ✨ Key Features
+
+- **👁️ Eye Gaze Tracking**: Control cursor by looking at different parts of the screen
+- **👀 Blink Detection**: Perform clicks using eye blinks
+  - **Double Blink** (both eyes) → Right Click
+  - **Triple Blink** (both eyes) → Left Click
+- **🎯 5-Point Calibration**: Personalized calibration for accurate tracking
+- **🖱️ Smooth Cursor Control**: Advanced smoothing and deadzone to prevent jitter
+- **🎨 User-Friendly GUI**: Simple interface with calibration and control buttons
 
 ---
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
+- [System Requirements](#system-requirements)
+- [Quick Start (For Your Friend)](#quick-start-for-your-friend)
 - [Installation](#installation)
-- [Usage](#usage)
+- [How to Use](#how-to-use)
 - [How It Works](#how-it-works)
-- [Configuration](#configuration)
-- [Building Executable](#building-executable)
 - [Troubleshooting](#troubleshooting)
-- [Future Scope](#future-scope)
-- [Contributing](#contributing)
+- [Configuration](#configuration)
 - [License](#license)
 
 ---
 
-## 🎯 Overview
+## 💻 System Requirements
 
-This project provides a complete desktop solution for hands-free computer control using only eye movements and blinks. Built with Python and powered by AI/ML technologies, it's designed specifically for users with physical disabilities who cannot use traditional input devices.
+### Minimum Requirements
+- **OS**: Windows 10/11
+- **Python**: 3.8 or higher (tested on 3.12)
+- **RAM**: 4GB minimum (8GB recommended)
+- **Webcam**: Built-in or USB webcam (720p or higher recommended)
+- **Processor**: Intel i3 or equivalent
+- **Internet**: Required for initial dependency installation only
 
-### Key Technologies
-
-- **MediaPipe FaceMesh**: Real-time facial landmark detection
-- **OpenCV**: Video capture and processing
-- **PyAutoGUI**: Mouse control automation
-- **Tkinter**: User-friendly GUI
-- **NumPy**: Mathematical operations
-
----
-
-## ✨ Features
-
-### Core Functionality
-
-✅ **Gaze Tracking (NEW!)**
-- True gaze direction detection (not head position)
-- Relative iris position within eye socket
-- Works without ANY head movement
-- Calibration-based accurate mapping
-
-✅ **5-Point Calibration System**
-- One-time setup (or recalibrate anytime)
-- Looks at screen corners + center
-- Blink to confirm each point
-- Personal gaze-to-screen mapping
-
-✅ **Eye Tracking**
-- Real-time eye and pupil detection using MediaPipe
-- Accurate iris tracking for cursor control
-- High smoothing (0.85) to compensate for saccades
-- Smooth cursor movement with jitter reduction
-
-✅ **Mouse Control**
-- Gaze coordinates → Screen coordinates mapping
-- Calibration-based direct mapping (no sensitivity needed)
-- Full screen coverage after calibration
-
-✅ **Blink Detection**
-- Eye Aspect Ratio (EAR) algorithm implementation
-- Left eye blink → Left Click
-- Right eye blink → Right Click
-- Intelligent debouncing to prevent accidental clicks
-
-✅ **User Interface**
-- Clean, accessible Tkinter GUI
-- **Calibrate Gaze** button (primary action)
-- Start/Pause/Exit controls
-- Real-time status and calibration display
-- Visual feedback on camera window
-
-✅ **Advanced Features**
-- Optional voice feedback (Text-to-Speech)
-- Configurable smoothing settings
-- Exception handling and error recovery
-- Camera detection and validation
-- Calibration save/load capability
+### Recommended Setup
+- Good lighting on your face
+- Stable seating position (headrest recommended)
+- 1-2 feet distance from webcam
+- No strong reflections on glasses (if worn)
 
 ---
 
-## 🚀 Installation
+## ⚡ Quick Start (For Your Friend)
 
-### Prerequisites
+### Option 1: Ready-to-Run Package (Easiest)
 
-- **Operating System**: Windows 10/11
-- **Python**: 3.8 or higher
-- **Webcam**: Built-in or USB webcam
-- **RAM**: Minimum 4GB recommended
+1. **Download the complete project folder**
+   - Get the entire `eye_mouse_project` folder
+   - Keep all files together in the same folder
 
-### Step-by-Step Installation
+2. **Install Python** (if not installed)
+   - Download from: https://www.python.org/downloads/
+   - During installation: ✅ **Check "Add Python to PATH"**
+   
+3. **Install Dependencies** (ONE-TIME SETUP)
+   - Open Command Prompt or PowerShell
+   - Navigate to project folder:
+     ```bash
+     cd path\to\eye_mouse_project
+     ```
+   - Run installation command:
+     ```bash
+     pip install -r requirements.txt
+     ```
+   - Wait for all packages to install (2-5 minutes)
 
-1. **Clone or Download the Project**
-   ```bash
-   cd eye_mouse_project
-   ```
-
-2. **Create Virtual Environment (Recommended)**
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Verify Installation**
-   ```bash
-   python -c "import cv2, mediapipe, pyautogui; print('All dependencies installed successfully!')"
-   ```
-
----
-
-## 🎮 Usage
-
-### First Time Setup (IMPORTANT!)
-
-1. **Start the Application**
+4. **Run the Application**
    ```bash
    python main.py
    ```
 
-2. **Calibrate Your Gaze (REQUIRED)**
+5. **First Time Setup**
    - Click **"🎯 Calibrate Gaze"** button
-   - Keep your HEAD STILL throughout calibration
-   - Look at each target circle that appears:
-     - Top-Left corner
-     - Top-Right corner
-     - Bottom-Right corner
-     - Bottom-Left corner
-     - Center
-   - **Blink when you're looking directly at the target**
-   - System captures your gaze range
-   - Calibration complete! ✓
-
-3. **Start Tracking**
+   - Follow the calibration instructions
    - Click **"▶ Start Tracking"**
-   - The webcam window will open showing your face with landmarks
-   - **Keep your HEAD STILL** (very important!)
-   - Move your EYES to control the cursor
-   - Blink left eye for left click
-   - Blink right eye for right click
-   - Click **"⏸ Pause"** to stop tracking
-   - Click **"❌ Exit"** to close the application
+   - Control cursor with your eyes!
 
-4. **Keyboard Shortcuts**
-   - Press **Q** in the camera window to hide it (tracking continues)
+### Option 2: Virtual Environment (Recommended for Developers)
 
-### Daily Use (After First Calibration)
+```bash
+# Create virtual environment
+python -m venv venv
 
+# Activate it
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run application
+python main.py
 ```
-1. Launch app
-2. Click "Calibrate Gaze" (quick 2-minute recalibration)
-3. Click "Start Tracking"
-4. Look where you want cursor to go
-5. Keep head still, move only eyes
-6. Blink to click
-```
-
-### Tips for Best Performance
-
-✅ **DO:**
-- Keep head completely still (use headrest if possible)
-- Position yourself 1-2 feet from webcam
-- Ensure good, even lighting on your face
-- Calibrate in the same position you'll use for tracking
-- Recalibrate if camera or your position changes
-- Take breaks every 15-20 minutes
-
-❌ **DON'T:**
-- Move your head while tracking
-- Use in poor lighting
-- Wear glasses with strong reflections
-- Sit too close or too far from camera
-- Skip calibration
 
 ---
 
-## 🔧 How It Works
+## 🔧 Key Technologies
 
-### Architecture
+- **MediaPipe FaceMesh v0.10.21**: 478 facial landmarks, iris tracking
+- **OpenCV 4.12**: Video capture and image processing
+- **PyAutoGUI 0.9.54**: Mouse cursor control and clicks
+- **NumPy**: Mathematical calculations and smoothing
+- **Tkinter**: Built-in Python GUI (no extra installation)
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         main.py                              │
-│                   (Application Controller)                   │
-└────────────┬────────────────────────────────────────────────┘
-             │
-             ├─────► eye_tracker.py
-             │       • MediaPipe FaceMesh
-             │       • Facial landmark detection
-             │       • Eye position calculation
-             │
-             ├─────► mouse_controller.py
-             │       • Coordinate conversion
-             │       • Cursor movement
-             │       • Click actions
-             │
-             ├─────► blink_detector.py
-             │       • EAR calculation
-             │       • Blink detection
-             │       • Click triggering
-             │
-             └─────► ui.py
-                     • Tkinter GUI
-                     • User controls
-                     • Status display
-```
+---
 
-### Eye Aspect Ratio (EAR) Algorithm
+## 📦 Dependencies (Auto-Installed)
 
-The blink detection uses the Eye Aspect Ratio formula:
+All required packages are listed in `requirements.txt`:
 
 ```
-EAR = (||p2-p6|| + ||p3-p5||) / (2 * ||p1-p4||)
+opencv-python      # Computer vision and webcam
+mediapipe         # Face and eye landmark detection
+pyautogui         # Mouse control
+numpy             # Mathematical operations
+pyttsx3           # Text-to-speech (optional)
+screeninfo        # Multi-monitor support
+Pillow            # Image processing
 ```
 
-Where p1-p6 are the eye landmark points. When EAR drops below a threshold (~0.20), a blink is detected.
+**Installation**: Run `pip install -r requirements.txt`
 
-### Coordinate Mapping
+---
+
+## 🚀 How to Use
+
+### Step 1: Launch the Application
+
+```bash
+python main.py
+```
+
+A window will open with the control interface.
+
+### Step 2: Calibrate Your Gaze (REQUIRED - First Time)
+
+1. Click **"🎯 Calibrate Gaze"** button
+2. A webcam window opens showing your face
+3. **5 target circles** will appear one by one:
+   - **Top-Left corner**
+   - **Top-Right corner**
+   - **Bottom-Right corner**
+   - **Bottom-Left corner**
+   - **Center**
+4. For each target:
+   - **Look directly at the target**
+   - **Blink BOTH eyes** to confirm
+   - Target turns green ✓
+5. After all 5 points: **Calibration Complete!**
+
+### Step 3: Start Eye Tracking
+
+1. Click **"▶ Start Tracking"**
+2. Webcam window opens with facial landmarks
+3. **Look around** to move the cursor
+4. **Blink to click**:
+   - **Double blink** (both eyes, quick) = **RIGHT CLICK**
+   - **Triple blink** (both eyes, quick) = **LEFT CLICK**
+
+### Step 4: Control Tips
+
+✅ **Best Practices:**
+- Keep head relatively still (some movement is OK)
+- Look at different screen areas to move cursor
+- Perform deliberate, clear blinks for clicks
+- Take breaks every 15-20 minutes
+
+⏸️ **Pause Tracking**: Click "⏸ Pause" button  
+❌ **Exit**: Click "❌ Exit" button or press 'Q' in webcam window
+
+---
+
+## 🔍 How It Works
+
+### System Architecture
 
 ```
-Camera Space (0-1 normalized) → Screen Space (pixels)
-  ↓
-Apply Sensitivity & Smoothing
-  ↓
-Dead Zone Filter
-  ↓
-Screen Coordinates
-  ↓
-PyAutoGUI Movement
+┌─────────────────────────────────────────────────────────┐
+│  User's Face → Webcam → MediaPipe → Eye Landmarks      │
+└────────────────────┬────────────────────────────────────┘
+                     │
+        ┌────────────┴──────────────┐
+        │                           │
+        ▼                           ▼
+  ┌──────────┐              ┌─────────────┐
+  │   Iris   │              │    Blink    │
+  │ Position │              │  Detection  │
+  │ Tracking │              │    (EAR)    │
+  └────┬─────┘              └──────┬──────┘
+       │                           │
+       ▼                           ▼
+  ┌─────────────┐           ┌─────────────┐
+  │ Calibration │           │   Pattern   │
+  │   Mapping   │           │   Matching  │
+  └─────┬───────┘           └──────┬──────┘
+        │                          │
+        ▼                          ▼
+  ┌──────────────┐          ┌─────────────┐
+  │ Cursor Move  │          │   Clicks    │
+  │  (PyAutoGUI) │          │ (PyAutoGUI) │
+  └──────────────┘          └─────────────┘
 ```
+
+### Eye Aspect Ratio (EAR) - Blink Detection
+
+```
+EAR = (||p2 - p6|| + ||p3 - p5||) / (2 × ||p1 - p4||)
+
+Where p1-p6 are eye landmarks
+EAR < 0.21 → Eye is closed (blink detected)
+```
+
+### Calibration System
+
+The 5-point calibration creates a mapping:
+```
+Iris Position (0.0 - 1.0) → Screen Coordinates (pixels)
+```
+
+This personalized mapping ensures accurate cursor control across your entire screen.
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues & Solutions
+
+#### ❌ "Please calibrate first!" Error
+**Problem**: Tried to start tracking without calibration  
+**Solution**: Click "🎯 Calibrate Gaze" button before "▶ Start Tracking"
+
+#### ❌ Camera Not Found
+**Problem**: Webcam not detected  
+**Solutions**:
+- Check webcam is connected and working
+- Close other apps using webcam (Zoom, Skype, etc.)
+- Try different USB port
+- Restart application
+
+#### ❌ Calibration Times Out
+**Problem**: Calibration doesn't detect blinks  
+**Solutions**:
+- Improve lighting on your face
+- Remove glasses if they cause reflections
+- Perform clear, deliberate blinks (close eyes fully)
+- Look directly at target before blinking
+- Ensure face is clearly visible in webcam
+
+#### ❌ Cursor Doesn't Move or Moves Erratically
+**Problem**: Poor tracking after calibration  
+**Solutions**:
+- **Recalibrate** in your actual working position
+- Ensure good, even lighting
+- Keep head relatively stable
+- Check webcam is focused on your face
+- Increase smoothing in settings (see Configuration)
+
+#### ❌ Clicks Don't Work
+**Problem**: Blinks not detected or false clicks  
+**Solutions**:
+- Perform clear, complete blinks (fully close eyes)
+- **Double blink**: Close-open-close-open (quick)
+- **Triple blink**: Close-open-close-open-close-open (quick)
+- Wait for cooldown period between click attempts
+- Adjust EAR threshold in `blink_detector.py`
+
+#### ❌ Cursor Too Jittery
+**Problem**: Cursor shakes too much  
+**Solutions**:
+- Edit `mouse_controller.py`:
+  ```python
+  self.smoothing_factor = 0.90  # Increase from 0.85
+  ```
+- Keep head more stable
+- Improve lighting conditions
+
+#### ❌ Cursor Too Slow/Laggy
+**Problem**: Cursor feels unresponsive  
+**Solutions**:
+- Decrease smoothing:
+  ```python
+  self.smoothing_factor = 0.80  # Decrease from 0.85
+  ```
+- Close background applications
+- Use better webcam if available
+
+#### ❌ Dependencies Installation Failed
+**Problem**: `pip install -r requirements.txt` errors  
+**Solutions**:
+- Update pip: `python -m pip install --upgrade pip`
+- Install Visual C++ Build Tools (for some packages)
+- Try installing packages individually:
+  ```bash
+  pip install opencv-python
+  pip install mediapipe
+  pip install pyautogui
+  pip install numpy
+  ```
 
 ---
 
 ## ⚙️ Configuration
 
-### Adjusting Smoothing (Most Common Adjustment)
+### Adjusting Cursor Smoothing
 
 Edit `mouse_controller.py`:
 
 ```python
-# For gaze tracking, higher smoothing is recommended
-self.smoothing_factor = 0.85  # Default for gaze tracking
-
-# If cursor is too jittery: increase to 0.90
-# If cursor feels slow: decrease to 0.80
+class MouseController:
+    def __init__(self):
+        self.smoothing_factor = 0.85  # Default
+        # Lower (0.70-0.80) = More responsive, more jitter
+        # Higher (0.85-0.95) = Smoother, slower response
 ```
 
-### Adjusting Blink Threshold
+### Adjusting Blink Sensitivity
 
 Edit `blink_detector.py`:
 
 ```python
-# Lower = more sensitive (easier to trigger)
-# Higher = less sensitive (harder to trigger)
-self.ear_threshold = 0.20  # Default
+class BlinkDetector:
+    def __init__(self):
+        self.ear_threshold = 0.21  # Default
+        # Lower (0.18-0.20) = Easier to trigger (more sensitive)
+        # Higher (0.22-0.25) = Harder to trigger (less sensitive)
+        
+        self.min_consecutive_frames = 3  # Frames to confirm blink
+        # Lower = More responsive
+        # Higher = More reliable, fewer false positives
 ```
 
-### Calibration Margin
+### Adjusting Eye Position Smoothing
 
-Edit `calibration.py`:
+Edit `eye_tracker.py`:
 
 ```python
-# Increase for wider cursor range
-margin_x = 0.05  # Default (5% margin)
-margin_y = 0.05  # Default (5% margin)
+class EyeTracker:
+    def __init__(self):
+        self.smoothing_factor = 0.3  # Default (eye position)
+        self.history_size = 5  # Average last N frames
+        # Increase history_size for more stability
 ```
 
 ---
 
-## 📦 Building Executable
+## 📁 Project Structure
 
-To create a standalone `.exe` file that can run without Python installed:
+```
+eye_mouse_project/
+│
+├── main.py                    # Main application entry point
+├── eye_tracker.py            # Eye/iris tracking with MediaPipe
+├── mouse_controller.py       # Cursor movement and control
+├── blink_detector.py         # Blink detection (EAR algorithm)
+├── calibration.py            # 5-point calibration system
+├── ui.py                     # Tkinter GUI interface
+├── requirements.txt          # Python dependencies
+├── README.md                 # This file
+├── LICENSE                   # MIT License
+│
+└── Documentation/
+    ├── GAZE_TRACKING_GUIDE.md
+    ├── TECHNICAL_DOCUMENTATION.md
+    └── UPGRADE_SUMMARY.md
+```
 
-### Using PyInstaller
+---
 
-1. **Install PyInstaller**
-   ```bash
-   pip install pyinstaller
-   ```
+## 🎁 Sharing with Friends
 
-2. **Build the Executable**
-   ```bash
-   pyinstaller --noconfirm --onefile --windowed --icon=icon.ico main.py
-   ```
+### What to Share:
 
-3. **Find the Executable**
-   - The `.exe` file will be in the `dist/` folder
-   - Distribute this file to users
+1. **Entire project folder** (all files together)
+2. **This README** for setup instructions
+3. **Python 3.8+** installation requirement
 
-### Build Options Explained
-
-- `--onefile`: Creates a single executable file
-- `--windowed`: Hides the console window
-- `--icon=icon.ico`: Sets application icon (optional)
-- `--add-data`: Include additional files if needed
-
-### Advanced Build Command
+### Setup Instructions for Recipient:
 
 ```bash
-pyinstaller --noconfirm --onefile --windowed ^
-    --name "EyeMouse" ^
-    --icon=icon.ico ^
-    --add-data "README.md;." ^
-    main.py
-```
+# 1. Install Python (if needed)
+#    Download from python.org, check "Add to PATH"
 
----
+# 2. Open terminal in project folder
+cd path\to\eye_mouse_project
 
-## 🔍 Troubleshooting
-
-### Common Issues
-
-#### "Not Calibrated" Error
-```
-Error: Please calibrate first!
-```
-**Solution**: 
-- Click "Calibrate Gaze" button before "Start Tracking"
-- Complete all 5 calibration points
-- Ensure you blinked at each target
-
-#### Calibration Fails or Times Out
-**Solution**:
-- Ensure good lighting on face
-- Look directly at targets
-- Perform deliberate, clear blinks
-- Remove glasses if causing reflections
-- Position face clearly in camera view
-
-#### Cursor Doesn't Reach Screen Edges
-**Solution**:
-- Recalibrate with more extreme eye movements
-- Look as far as comfortable to corners
-- Reduce margin in `calibration.py`:
-  ```python
-  margin_x = 0.02  # Smaller margin
-  margin_y = 0.02
-  ```
-
-#### Cursor is Jittery
-**Solution**:
-- Increase smoothing in `mouse_controller.py`:
-  ```python
-  self.smoothing_factor = 0.90  # Higher smoothing
-  ```
-- Ensure head is completely still
-- Check lighting (avoid shadows on face)
-- Use headrest or neck support
-
-#### Cursor Moves in Wrong Direction
-**Solution**:
-- Recalibrate completely
-- Ensure camera is not mirrored
-- Keep head straight during calibration
-- Check landmarks are detected correctly
-
-#### Camera Not Detected
-```
-Error: Camera not found!
-```
-**Solution**: 
-- Check if webcam is connected and working
-- Try different USB ports
-- Close other applications using the camera
-- Restart the application
-
-#### Cursor Feels Slow or Laggy
-**Solution**:
-- Decrease smoothing to 0.80
-- Reduce webcam resolution
-- Close unnecessary background apps
-- Check CPU usage
-
----
-
-## 🚀 Future Scope
-
-### Planned Features
-
-- [ ] **Calibration Mode**: Personalized sensitivity calibration
-- [ ] **Gesture Control**: Head movements for additional commands
-- [ ] **Voice Commands**: Integration with speech recognition
-- [ ] **Multi-Monitor Support**: Improved multi-display handling
-- [ ] **Dwell Click**: Click by dwelling cursor for X seconds
-- [ ] **Configuration GUI**: UI for adjusting settings without code
-- [ ] **Usage Analytics**: Track and display usage statistics
-- [ ] **Accessibility Profiles**: Pre-configured profiles for different disabilities
-- [ ] **Remote Control**: Control other devices via network
-- [ ] **Mobile App**: Smartphone as wireless eye tracker
-
-### Potential Improvements
-
-- Machine learning for adaptive sensitivity
-- Support for Linux and macOS
-- Integration with screen readers
-- Custom cursor designs for better visibility
-- Battery optimization for laptops
-- Cloud sync for settings across devices
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how you can help:
-
-1. **Report Bugs**: Open an issue describing the problem
-2. **Suggest Features**: Share your ideas for improvements
-3. **Submit Pull Requests**: Contribute code improvements
-4. **Documentation**: Help improve docs and tutorials
-5. **Testing**: Test on different hardware and report results
-
-### Development Setup
-
-```bash
-# Clone repository
-git clone <repository-url>
-cd eye_mouse_project
-
-# Create virtual environment
-python -m venv venv
-venv\Scripts\activate
-
-# Install dev dependencies
+# 3. Install dependencies (one time)
 pip install -r requirements.txt
-pip install pylint black pytest
 
-# Run tests
-pytest tests/
+# 4. Run application
+python main.py
 
-# Format code
-black *.py
+# 5. Calibrate and enjoy!
 ```
+
+### Alternative: Create Executable (Advanced)
+
+To create a standalone `.exe` file:
+
+```bash
+# Install PyInstaller
+pip install pyinstaller
+
+# Build executable
+pyinstaller --onefile --windowed --name "EyeMouse" main.py
+
+# Find .exe in dist/ folder
+# Share the entire dist/ folder with dependencies
+```
+
+---
+
+## 🎯 Usage Tips for Best Results
+
+### 🟢 DO:
+- ✅ Keep head relatively stable during use
+- ✅ Calibrate in your actual working position
+- ✅ Use good, even lighting on your face
+- ✅ Position yourself 1-2 feet from webcam
+- ✅ Take breaks every 15-20 minutes
+- ✅ Recalibrate if you change seating position
+- ✅ Close eyes fully for clear blinks
+
+### 🔴 DON'T:
+- ❌ Use in dim or uneven lighting
+- ❌ Wear glasses with strong reflections
+- ❌ Sit too close or too far from camera
+- ❌ Make sudden head movements
+- ❌ Skip calibration step
+- ❌ Rush the calibration process
+
 
 ---
 
@@ -466,37 +455,42 @@ black *.py
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
----
-
-## 👏 Acknowledgments
-
-- **MediaPipe** by Google - For excellent face landmark detection
-- **OpenCV** - For computer vision capabilities
-- **PyAutoGUI** - For cross-platform GUI automation
-- **Community Contributors** - For feedback and improvements
+### MIT License Summary
+- ✅ Commercial use allowed
+- ✅ Modification allowed  
+- ✅ Distribution allowed
+- ✅ Private use allowed
+- ⚠️ No warranty provided
 
 ---
 
-## 📞 Support
+## � Acknowledgments
 
-For help and support:
-
-- **Issues**: Open an issue on GitHub
-- **Email**: [your-email@example.com]
-- **Documentation**: Read this README carefully
+- **MediaPipe** by Google - Excellent face and iris landmark detection
+- **OpenCV** - Powerful computer vision library
+- **PyAutoGUI** - Simple and effective GUI automation
+- **Python Community** - Amazing ecosystem and support
 
 ---
 
-## 🌟 Star This Project
+## � Support & Contact
 
-If you find this project helpful, please give it a ⭐ on GitHub!
+**Issues?** Open an issue on GitHub: https://github.com/Sanjai-Kumar-B/Ai-Eye-Tracking/issues
+
+**Questions?** Check the Troubleshooting section above first!
 
 ---
 
 <div align="center">
 
+### 🌟 If this project helps you, please give it a ⭐ on GitHub!
+
 **Built with ❤️ for accessibility and inclusion**
 
-Made with Python | Powered by AI | Designed for Everyone
+*Making technology accessible for everyone*
+
+---
+
+**Version**: 2.0 | **Last Updated**: November 2025
 
 </div>
